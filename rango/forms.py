@@ -1,5 +1,8 @@
 from django import forms
 from rango.models import Page, Category
+from django.contrib.auth.models import User 
+from rango.models import UserProfile
+
 
 class CategoryForm(forms.ModelForm):
     name = forms.CharField(max_length=Category.NAME_MAX_LENGTH,
@@ -43,4 +46,17 @@ class PageForm(forms.ModelForm):
         # we can either exclude the category field from the form,
         exclude = ('category',)
         # or specify the fields to include (don't include the category field).
-        # fields = ('title', 'url', 'views')   
+        # fields = ('title', 'url', 'views')
+
+class UserForm(forms.ModelForm): 
+    password = forms.CharField(widget=forms.PasswordInput())
+    
+    class Meta: 
+        model = User 
+        fields = ('username', 'email', 'password',)
+
+class UserProfileForm(forms.ModelForm): 
+    class Meta: 
+        model = UserProfile 
+        fields = ('website', 'picture',)
+   
